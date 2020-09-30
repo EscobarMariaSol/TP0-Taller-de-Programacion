@@ -72,16 +72,16 @@ veamos el siguiente ejemplo:
 ```
 Supongamos que estamos en una arquitectura donde el tamaño de un int es de 
 4 bytes, la estructura queda almacenada como:
-|0|0|0|1|
-|2|-|-|-| => se puede observar que quedan bytes desperdiciados, por lo que el 
-|0|0|0|3|   sizeof() de mi estructura devolvería 12, si sumamos los tamaños 
+- |0|0|0|1|
+- |2|-|-|-| => se puede observar que quedan bytes desperdiciados, por lo que el 
+- |0|0|0|3|   sizeof() de mi estructura devolvería 12, si sumamos los tamaños 
 sizeof(int) + sizeof(char) + sizeof(int) = 4+1+4 = 9 vemos que no coinciden.
 
 
-5. **Investigar la existencia de los archivos estándar: STDIN, STDOUT, STDERR.** 
+5. **Investigar la existencia de los archivos estándar: STDIN, STDOUT, STDERR.
 Explicar brevemente su uso y cómo redirigirlos en caso de ser necesario 
 (caracteres > y ​ <) y como conectar la salida estándar de un proceso a la 
-entrada estándar de otro con un pipe​ (carácter |​).
+entrada estándar de otro con un pipe​ (carácter |​).**
 
 Los archivos estándar **STDIN, STDOUT, STDERR** son descriptores o canales 
 que uiliza el sistema operativo para conectar la entrada, salida e informe de
@@ -184,4 +184,60 @@ anteriores, pero hay también ciertos errores que no aparecían anteriormente.
 
 ## Paso 2: SERCOM - Errores de generación 2
 
+
+1. **Describa en breves palabras​ las correcciones realizadas respecto de la versión
+anterior. Luego de Verificar los cambios realizados respecto de la entrega 
+anterior utilizando el comando diff:**
+
+*diff paso1_main.c paso2_main.c || diff paso1_wordscounter.c paso2_wordscounter.c*
+*|| diff paso1_wordscounter.h paso2_wordscounter.h*
+
+Las correcciones realizadas en los archivos están relacionadas a los errores 
+asociados a las normas básicas de codificación.
+	- **diff paso1_main.c paso2_main.c:** Se incluye el archivo
+		*paso2_wordscounter.h*, se reemplaza la función *strcpy* por la función
+		*memcpy*, y por último se coloca la sentencia *else* en la misma línea 
+		que la llave que lo precede.
+	- **diff paso1_wordscounter.c paso2_wordscounter.c:** Se incluye el archivo
+		*paso2_wordscounter.h*, se agrega un espacio entre la sentencia *while*
+		y el paréntesis que encierra la condición, se elimina un espacio 
+		innecesario dentro del paréntesis que encierra la condición de un *if*,
+		se coloca un *else if* en la misma línea que la llave que lo precede y 
+		por último se elimina un espacio innecesario entre una variable y el *;*.
+	- **diff paso1_wordscounter.h paso2_wordscounter.h:** se reduce la longitud
+		del comentario que superaba los 80 caracteres.
+		
+2. **Captura de pantalla indicando la correcta ejecución de verificación de normas
+de programación.**
+![Paso2_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso2/paso_2_2.png)
+
+3. **Captura de pantalla indicando los errores de generación del ejecutable. 
+Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+![Paso2_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso2/paso_2_0.png)
+![paso2_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso2/paso_2_1.png)
+	- **paso2_wordscounter.h:7 y 20:** error de tipo desconocido, esto es porque
+		el tipo *size_t* no fue declarado dentro del archivo, vemos además que 
+        el compilador nos sugiere incluir la librería <stddef.h>, ya que en 
+        ella se provee una declaración del tipo de dato *size_t*, indicandonos
+        cómo y dónde hacerlo, este error corresponde a un error de compilación.
+	- **paso2_wordscounter.h:25:** nuevamente se trata de un error de tipo
+		desconocido, ya que el tipo *FILE* no fue declarado dentro del archivo,
+		y corresponde a un error de compilación.
+	- **paso2_wordscounter.c:17:** aquí se produce un error debido al error del
+		tipo *size_t*, ya que *wordscounter_get_words* devuelve un valor de tipo
+		*size_t*, como el compilador no conoce este tipo se produce el error.
+	- **paso2_wordscounter.h:20:** es un mensaje de error indicando donde fue 
+		declarada la función *wordscounter_get_words*, el cual se debe al error
+		mencionado anteriormente y corresponde a un error de compilación.
+	- **paso2_wordscounter.c:30:** este error indica una declaración 
+		implicita de la función *malloc*, que devuelve punteros, 
+        ya que la misma no está declarada de esa manera pues existe una
+        una declaración default (built-in) que devuelve int, por lo que al 
+        intentar usar la que devuelve punteros se entra en conflicto. Como GCC
+		conoce de la existencia de este problema nos sugiere incluir la 
+        biblioteca <stdlib.h> la cual provee una declaración de la función
+        malloc que realmente se quiere usar. Este error también corresponde a 
+        un error de compilación.
+
+## Paso 3: SERCOM - Errores de generación 3
 		
