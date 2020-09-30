@@ -1,4 +1,4 @@
-# Trabajo Práctico 0 - Taller de Programación  - (75.42/95.08)
+# Trabajo Práctico 0 - Taller de Programación I - (75.42/95.08)
 # Informe
 
 **Padrón:**  97877
@@ -11,10 +11,10 @@
 
 ## Paso 0: Entorno de trabajo
 
-1. Capturas de pantalla de la ejecución del aplicativo.
+1. **Capturas de pantalla de la ejecución del aplicativo.**
 ![Paso0](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso0/paso0.png)
 
-2. ¿Para qué sirve ​ Valgrind​? ¿Cuáles son sus opciones más comunes?
+2. **¿Para qué sirve ​ Valgrind​? ¿Cuáles son sus opciones más comunes?**
 
 Valgrind es una herramienta que se utiliza para detectar y reportar errores en 
 nuestros programas, relacionados al uso de memoria, como puede ser la pérdida 
@@ -38,8 +38,8 @@ por ejemplo:
     - *--track-origins: esta opción nos sirve para recibir un reporte acerca de
         donde se están originando los valores no inicializados, de haberlos.
 	
-3. ¿Qué representa ​ sizeof()​?¿Cuál sería el valor de salida de sizeof(char)​ 
-y ​sizeof(int)​?
+3. **¿Qué representa ​ sizeof()​?¿Cuál sería el valor de salida de sizeof(char)​ 
+y ​sizeof(int)​?**
 
 El operador sizeof()​ devuelve el tamaño, en bytes, que un tipo de dato, el cual 
 le pasamos por parámetro, ocupa en memoria.
@@ -51,8 +51,8 @@ sizeof(int) puede ser de 4 u 8 bytes, lo que sí es seguro es que siempre serán
 multiplos de 4.
 
 
-4. ¿El ​sizeof()​ de una struct de C es igual a la suma del sizeof()​ de cada 
-uno sus elementos? Justifique mediante un ejemplo.
+4. **¿El ​sizeof()​ de una struct de C es igual a la suma del sizeof()​ de cada 
+uno sus elementos? Justifique mediante un ejemplo.**
 
 En el caso de una struct hemos visto en clase que podemos encontrarnos con 
 espacio desperdiciado dentro de ella, ya que los datos se alinean en posiciones
@@ -78,7 +78,7 @@ Supongamos que estamos en una arquitectura donde el tamaño de un int es de
 sizeof(int) + sizeof(char) + sizeof(int) = 4+1+4 = 9 vemos que no coinciden.
 
 
-5. Investigar la existencia de los archivos estándar: STDIN, STDOUT, STDERR. 
+5. **Investigar la existencia de los archivos estándar: STDIN, STDOUT, STDERR.** 
 Explicar brevemente su uso y cómo redirigirlos en caso de ser necesario 
 (caracteres > y ​ <) y como conectar la salida estándar de un proceso a la 
 entrada estándar de otro con un pipe​ (carácter |​).
@@ -111,3 +111,77 @@ hacer esto sería ejecutando el siguiente comando *prog_entrada | prog_salida*,
 donde prog_salida utiliza como entrada los datos devuletos por prog_entrada.
 
 ## Paso 1: SERCOM - Errores de generación y normas de programación
+
+
+1. **Capturas de pantalla mostrando los problemas de estilo detectados. 
+Explicar cada uno.**
+![Paso1_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_1.png)
+- **Archivo paso1_wordscounter.c**
+	- Línea 27: indica que falta un espacio para separar la clausula de flujo 
+		*while* de la condición encerrada entre paréntesis.
+	- Línea 41: indica que hay un espacio innecesario dentro del parentesis de 
+		la condición del *if*.
+	- Línea 47: indica que un *else if* debe aparecer en la misma linea de la 
+		llave que lo precede, es decir, en la linea 46, y que además si un 
+		*else* tiene una llave a un lado debe tenerlo de ambos lados.
+	- Línea 48: indica que debe haber un espacio entre la sentencia *if* y el 
+		paréntesis que encierra la condición.
+	- Línea 53: indica que hay un espacio innecesario entre la variable 
+		*next_state* y el *;*.
+	- Línea 14: si bien el Sercom no indica la existencia de un error, en esta 
+		linea no se cumple con las normas básicas de codificación al abrir una 
+		llave en una nueva línea, la misma debería estar en la línea 13.
+- **Archivo paso1_main.c**
+	- Línea 12: indica que siempre es preferible usar la función *snprintf* en 
+		lugar de *strcpy*, ya que a la misma le especifico la cantidad de bytes 
+		que voy a escribir y no va a permitir que escriba más que esa cantidad, 
+		sin embargo con *strcpy* puedo escribir y superar el tamaño que se 
+		espera y pisar otros datos.
+	- Línea 15: aca nos indica nuevamente que un *else* debe aparecer en la 
+		misma línea que la llave que lo precede y que además el mismo debe tener
+		llaves de ambos lados.
+- **Archivo paso1_wordscounter.h**
+	- Línea 5: indica que las líneas no deben tener más de 80 caracteres ya que 
+	en esta linea tenemos un comentario con 82 caracteres.
+Si bien Sercom no emitió errores sobre los nombres de funciones, en las reglas 
+básicas de codificación se señala que las funciones y métodos deben nombrarse
+utilizando camelCase como separador de palabras, como también PascalCase para
+las clases y tipos, lo cual no se cumple en ninguno de estos archivos.
+
+2. **Captura de pantalla indicando los errores de generación del ejecutable. 
+Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+![Paso1_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_0.png)
+	
+- **Archivo paso1_main.c**
+	- Línea 22: el error indica que no se conoce el tipo *wordscounter_t* ya
+		que el mismo no está declarado dentro del archivo paso1_main.c, este 
+		error corresponde a un error de compilación.
+	- Líneas 23, 24,25 y 27: todas corresponden a un error de compilación, ya 
+		que no se han declarado las funciones  *wordscounter_create, 
+		wordscounter_process, wordscounter_get_words y wordscounter_destroy*, y
+		el compilador no sabe como resolver esas referencias.
+
+3. **¿El sistema reportó algún WARNING? ¿Por qué?**
+
+El Sercom no reporta ningún warning, sin embargo al intentar compilar y crear el 
+ejecutable desde la terminal sí se reportan warnings, esos warnigs
+en el Sercom se han reportado como errores, esto sucede por los flags utilizados
+a la hora de compilar ya que el Sercom utiliza flags para el tratamiento de 
+warnigs, en particular los flags *-pedantic-errors* y *-Werror* hacen que los
+warnings se reporten como errores. 
+Los warnigs detectados son los siguientes:
+![Paso1_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_2.png)
+Se puede observar que algunos corresponden a los mencionados en items 
+anteriores, pero hay también ciertos errores que no aparecían anteriormente.
+	- **paso1_wordscounter.c:31:** en esta linea nos indica una declaración 
+		implicita de la función *malloc* y además nos sugiere incluir la
+		biblioteca <stdlib.h> o proveer una declaración de la función dentro
+		de nuestro archivo. Esto sucede porque a la hora de compilar el archivo
+		el compilador no encuentra la función dentro del mismo o una declaración
+		que le asegure que esa función está definida en algún otro archivo.
+	- **paso1_wordscounter.h:7, 20, 25:** nos reporta un error de tipos 
+		desconocidos, ya que no se conocen los tipos *size_t y FILE*.
+
+## Paso 2: SERCOM - Errores de generación 2
+
+		
