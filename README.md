@@ -13,6 +13,7 @@
 ## Paso 0: Entorno de trabajo
 
 1. **Capturas de pantalla de la ejecución del aplicativo.**
+
 ![Paso0](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso0/paso0.png)
 
 2. **¿Para qué sirve ​ Valgrind​? ¿Cuáles son sus opciones más comunes?**
@@ -117,7 +118,9 @@ donde prog_salida utiliza como entrada los datos devuletos por prog_entrada.
 
 1. **Capturas de pantalla mostrando los problemas de estilo detectados. 
 Explicar cada uno.**
+
 ![Paso1_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_1.png)
+
 - **Archivo paso1_wordscounter.c**
 	- Línea 27: indica que falta un espacio para separar la clausula de flujo 
 		*while* de la condición encerrada entre paréntesis.
@@ -152,6 +155,7 @@ las clases y tipos, lo cual no se cumple en ninguno de estos archivos.
 
 2. **Captura de pantalla indicando los errores de generación del ejecutable. 
 Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+
 ![Paso1_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_0.png)
 	
 - **Archivo paso1_main.c**
@@ -166,13 +170,15 @@ Explicar cada uno e indicar si se trata de errores del compilador o del linker.*
 3. **¿El sistema reportó algún WARNING? ¿Por qué?**
 
 El Sercom no reporta ningún warning, sin embargo al intentar compilar y crear el 
-ejecutable desde la terminal sí se reportan warnings, esos warnigs
+ejecutable localmente sí se reportan warnings, esos warnigs
 en el Sercom se han reportado como errores, esto sucede por los flags utilizados
 a la hora de compilar ya que el Sercom utiliza flags para el tratamiento de 
 warnigs, en particular los flags *-pedantic-errors* y *-Werror* hacen que los
 warnings se reporten como errores. 
 Los warnigs detectados son los siguientes:
+
 ![Paso1_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_2.png)
+
 Se puede observar que algunos corresponden a los mencionados en items 
 anteriores, pero hay también ciertos errores que no aparecían anteriormente.
 - **paso1_wordscounter.c:31:** en esta linea nos indica una declaración 
@@ -212,27 +218,31 @@ asociados a las normas básicas de codificación.
 		
 2. **Captura de pantalla indicando la correcta ejecución de verificación de normas
 de programación.**
+
 ![Paso2_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso2/paso_2_2.png)
 
 3. **Captura de pantalla indicando los errores de generación del ejecutable. 
 Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+
 ![Paso2_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso2/paso_2_0.png)
+
 ![paso2_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso2/paso_2_1.png)
-	- **paso2_wordscounter.h:7 y 20:** error de tipo desconocido, esto es porque
+
+- **paso2_wordscounter.h:7 y 20:** error de tipo desconocido, esto es porque
 		el tipo *size_t* no fue declarado dentro del archivo, vemos además que 
         el compilador nos sugiere incluir la librería <stddef.h>, ya que en 
         ella se provee una declaración del tipo de dato *size_t*, indicandonos
         cómo y dónde hacerlo, este error corresponde a un error de compilación.
-	- **paso2_wordscounter.h:25:** nuevamente se trata de un error de tipo
+- **paso2_wordscounter.h:25:** nuevamente se trata de un error de tipo
 		desconocido, ya que el tipo *FILE* no fue declarado dentro del archivo,
 		y corresponde a un error de compilación.
-	- **paso2_wordscounter.c:17:** aquí se produce un error debido al error del
+- **paso2_wordscounter.c:17:** aquí se produce un error debido al error del
 		tipo *size_t*, ya que *wordscounter_get_words* devuelve un valor de tipo
 		*size_t*, como el compilador no conoce este tipo se produce el error.
-	- **paso2_wordscounter.h:20:** es un mensaje de error indicando donde fue 
+- **paso2_wordscounter.h:20:** es un mensaje de error indicando donde fue 
 		declarada la función *wordscounter_get_words*, el cual se debe al error
 		mencionado anteriormente y corresponde a un error de compilación.
-	- **paso2_wordscounter.c:30:** este error indica una declaración 
+- **paso2_wordscounter.c:30:** este error indica una declaración 
 		implicita de la función *malloc*, que devuelve punteros, 
         ya que la misma no está declarada de esa manera pues existe una
         una declaración default (built-in) que devuelve int, por lo que al 
@@ -256,14 +266,87 @@ versión anterior.**
 		
 2. **Captura de pantalla indicando los errores de generación del ejecutable. 
 Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+
 ![Paso3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso3/paso3.png)
-Se observa como sólo tenemos un error correspondiente al archivo *paso3_main.c*,
-en la línea número 27, *undefined reference to 'wordscounter_destroy'*, este 
-error nos indica que tenemos una referencia no definida, esto tiene que ver con
-el hecho de que si bien la función *wordscounter_destroy*, está declarada en el 
-archivo *paso3_wordscounter.h*, el cual estamos incluyendo, la función no se 
-encuentra definida ni en *paso3_wordscounter.h* o *paso3_wordscounter.c*, por
-lo que se genera un error del linker, ya que al buscar el código de esta función
-para enlazarlo y generar el ejecutable el linker no logra encontrarlo.
+
+Podemos observar de la existencia de un único error correspondiente al
+archivo *paso3_main.c*, en la línea número 27, *undefined reference to 
+'wordscounter_destroy'*, este error nos indica que tenemos una referencia no
+definida, esto tiene que ver con el hecho de que si bien la función 
+*wordscounter_destroy*, está declarada en el archivo *paso3_wordscounter.h*,
+el cual estamos incluyendo, la función no se encuentra definida ni en 
+*paso3_wordscounter.h* o *paso3_wordscounter.c*, por lo que se genera un error
+del linker, ya que al buscar el código de esta función para enlazarlo y generar
+el ejecutable el linker no logra encontrarlo.
 
 ## Paso 4: SERCOM - ​ Memory Leaks y ​ Buffer Overflows
+
+1. **Describa en breves palabras las correcciones realizadas respecto de la 
+versión anterior.**
+
+La única correción detectada es la que se realizó en el archivo 
+*paso3_wordscounter.c*, donde se define la función *wordscounter_destroy*, esto
+hace que el linker no arroje ningun error, aunque no se le proporciona ninguna
+funcionalidad a la función.
+
+2. Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba 
+‘TDA’. Describir los errores reportados por Valgrind.
+
+![Paso4_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_0.png)
+
+![Paso4_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_1.png)
+
+![Paso4_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_2.png)
+
+- **paso4_main.c:** En la línea 14 indica que hay 344 bytes sin liberar, a
+		los cuales no se le pierde referencia durante la ejecución, esto sucede
+		porque en esa línea se llama a la función *fopen* pero luego nunca se 
+		cierra el archivo llamando a *fclose*.
+- **paso4_main.c:** En la línea 24 indica que se perdieron 1,505 bytes en 
+		215 bloques, esto pasa porque al llamar función *wordscounter_process*,
+		que se encuentra en *paso4_wordscounter.c*, la cual a su vez llama a 
+		*wordscounter_next_state*, la cual pide memoria a través de *malloc* 
+		pero luego esa memoria no es liberada y al salir de la función de pierde
+		su referencia, como durante la ejecución de *wordscounter_process* se 
+		hacen varios llamados a esta función esto sucede en 215 veces.
+		
+3. **Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba 
+‘Long Filename’. Describir los errores reportados por Valgrind.**
+
+![Paso4_4](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_3.png)
+
+![Paso4_5](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_4.png)
+
+Este error indica que se produce un buffer overflow, esto sucede en el archivo 
+*paso4_main.c*, línea 13, donde se realiza un llamado a la función *memcpy* a la
+cual se le pasa un buffer de tamaño 30 bytes, luego se le pasa un texto el cual,
+será copiado, y el tamaño del texto, lo que sucede aquí es que esta función no 
+controla el tamaño de bytes que tiene el texto, por lo que al pasar un texto de
+tamaño mayor a 30 bytes el buffer se desborda y se empieza a copiar en la 
+memoria vecina al buffer.
+
+4. **¿Podría solucionarse este error utilizando la función strncpy​?
+¿Qué hubiera ocurrido con la ejecución de la prueba?**
+
+Si utilizaramos la función  *strncpy* el problema no será solucionado ya que 
+se copiaran los n bytes que le indiquemos, así sea mayor al tamaño del buffer,
+a no ser que se encuentre con un '\0' dentro de los bytes a copiar, lo cual es 
+la unica diferencia que tiene con *memcpy*, ya que esta copia la cantidad de
+ bytes que nosotros le hayamos especificado, sin detectar si hay caracteres
+ nulos o fin de string dentro de los mismos. 
+
+
+5. **Explicar de qué se trata un ​ segmentation fault​ y un ​ buffer overflow​.**
+
+*Segmentation Fault* es un error que se da cuanto se intenta acceder a lugares
+de memoria a los cuales no tenemos permitido. Por ejemplo, cuando se intenta
+escribir o modificar valores dentro del code segment.
+
+*Buffer overflow* es un error que se da cuando reservamos cierta cantidad de 
+memoria en un buffer y luego a la hora de utilizarlo superamos el tamaño de la
+memoria reservada y comenzamos a escribir en memoria que no teníamos asignada 
+para ese proposito.
+
+## Paso 5: SERCOM - Código de retorno y salida estándar
+
+
