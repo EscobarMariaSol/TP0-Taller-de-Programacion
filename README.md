@@ -25,17 +25,17 @@ herramienta reporta un tipo de error específico de acuerdo a los problemas que
 vaya detectando durante la ejecución del programa. Además se le puede indicar 
 ciertas opciones específicas de acuerdo a lo que nos interesa detectar, como 
 por ejemplo:
-	- *--leak-check:* buscará y reportará escapes de memoria. Si le asignamos la 
+- *--leak-check:* buscará y reportará escapes de memoria. Si le asignamos la 
 		opción --leak-check=summary informará sobre la cantidad de escapes
 		detectados, se le pueden asignar otras opciones como yes/no, para 
 		habilitar y deshabilitar, y full, para un reporte más detallado.
-	- *--undef-value-errors:* reportará los errores asociados a valores no 
+- *--undef-value-errors:* reportará los errores asociados a valores no 
 		definidos. Se puede asignar --undef-value-errors=yes o 
 		--undef-value-errors=no para habilitar o deshabilitar esta opción.
-    - *--show-reachable: se utiliza para reportar fugas de memoria, incluso las
+- *--show-reachable:* se utiliza para reportar fugas de memoria, incluso las
         que al terminar la ejecucion el sistema operativo se encarga 
         de arreglar.
-    - *--track-origins: esta opción nos sirve para recibir un reporte acerca de
+- *--track-origins:* esta opción nos sirve para recibir un reporte acerca de
         donde se están originando los valores no inicializados, de haberlos.
 	
 3. **¿Qué representa ​ sizeof()​?¿Cuál sería el valor de salida de sizeof(char)​ 
@@ -73,9 +73,10 @@ veamos el siguiente ejemplo:
 Supongamos que estamos en una arquitectura donde el tamaño de un int es de 
 4 bytes, la estructura queda almacenada como:
 - |0|0|0|1|
-- |2|-|-|-| => se puede observar que quedan bytes desperdiciados, por lo que el 
-- |0|0|0|3|   sizeof() de mi estructura devolvería 12, si sumamos los tamaños 
-sizeof(int) + sizeof(char) + sizeof(int) = 4+1+4 = 9 vemos que no coinciden.
+- |2|X|X|X| => se puede observar que quedan bytes desperdiciados, por lo que el 
+- |0|0|0|3| sizeof() de mi estructura devolvería 12, si sumamos los tamaños 
+            sizeof(int) + sizeof(char) + sizeof(int) = 4+1+4 = 9 
+            vemos que no coinciden.
 
 
 5. **Investigar la existencia de los archivos estándar: STDIN, STDOUT, STDERR.
@@ -86,12 +87,12 @@ entrada estándar de otro con un pipe​ (carácter |​).**
 Los archivos estándar **STDIN, STDOUT, STDERR** son descriptores o canales 
 que uiliza el sistema operativo para conectar la entrada, salida e informe de
 errores de un programa con la terminal cuando se está ejecutando.
-*STDIN:* refiere a la entrada estándar, es decir, a los datos que se envian al
+- *STDIN:* refiere a la entrada estándar, es decir, a los datos que se envian al
 programa, por ejemplo los parámetros que se ingresan al realizar una llamada al
 programa o al enviarle un archivo de entrada.
-*STDOUT:* refiere a la salida estándar, es decir, a los datos que devuelve el 
+- *STDOUT:* refiere a la salida estándar, es decir, a los datos que devuelve el 
 programa durante el período de ejecición.
-*STDERR:* refiere a la salida de errores, es decir, a los errores que han ido 
+- *STDERR:* refiere a la salida de errores, es decir, a los errores que han ido 
 registrando a lo largo de la ejecución de un programa.
 La información recolectada por de STDOUT y STDERR se pueden redirigir a un 
 archivo específico utilizando el caracter **>**, por ejemplo, 
@@ -173,13 +174,13 @@ Los warnigs detectados son los siguientes:
 ![Paso1_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso1/paso_1_2.png)
 Se puede observar que algunos corresponden a los mencionados en items 
 anteriores, pero hay también ciertos errores que no aparecían anteriormente.
-	- **paso1_wordscounter.c:31:** en esta linea nos indica una declaración 
+- **paso1_wordscounter.c:31:** en esta linea nos indica una declaración 
 		implicita de la función *malloc* y además nos sugiere incluir la
 		biblioteca <stdlib.h> o proveer una declaración de la función dentro
 		de nuestro archivo. Esto sucede porque a la hora de compilar el archivo
 		el compilador no encuentra la función dentro del mismo o una declaración
 		que le asegure que esa función está definida en algún otro archivo.
-	- **paso1_wordscounter.h:7, 20, 25:** nos reporta un error de tipos 
+- **paso1_wordscounter.h:7, 20, 25:** nos reporta un error de tipos 
 		desconocidos, ya que no se conocen los tipos *size_t y FILE*.
 
 ## Paso 2: SERCOM - Errores de generación 2
@@ -194,17 +195,17 @@ anterior utilizando el comando diff:**
 
 Las correcciones realizadas en los archivos están relacionadas a los errores 
 asociados a las normas básicas de codificación.
-	- **diff paso1_main.c paso2_main.c:** Se incluye el archivo
+- **diff paso1_main.c paso2_main.c:** Se incluye el archivo
 		*paso2_wordscounter.h*, se reemplaza la función *strcpy* por la función
 		*memcpy*, y por último se coloca la sentencia *else* en la misma línea 
 		que la llave que lo precede.
-	- **diff paso1_wordscounter.c paso2_wordscounter.c:** Se incluye el archivo
+- **diff paso1_wordscounter.c paso2_wordscounter.c:** Se incluye el archivo
 		*paso2_wordscounter.h*, se agrega un espacio entre la sentencia *while*
 		y el paréntesis que encierra la condición, se elimina un espacio 
 		innecesario dentro del paréntesis que encierra la condición de un *if*,
 		se coloca un *else if* en la misma línea que la llave que lo precede y 
 		por último se elimina un espacio innecesario entre una variable y el *;*.
-	- **diff paso1_wordscounter.h paso2_wordscounter.h:** se reduce la longitud
+- **diff paso1_wordscounter.h paso2_wordscounter.h:** se reduce la longitud
 		del comentario que superaba los 80 caracteres.
 		
 2. **Captura de pantalla indicando la correcta ejecución de verificación de normas
