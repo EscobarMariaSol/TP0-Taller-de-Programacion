@@ -1,9 +1,10 @@
 # Trabajo Práctico 0 - Taller de Programación I - (75.42/95.08)
 # Informe
 
-**Padrón:**  97877
 
 **Nombre:**  Escobar Benitez Maria Soledad
+
+**Padrón:**  97877
 
 **Repositorio:** [Link GitHub!](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion)
 
@@ -73,7 +74,7 @@ veamos el siguiente ejemplo:
 Supongamos que estamos en una arquitectura donde el tamaño de un int es de 
 4 bytes, la estructura queda almacenada como:
 - |0|0|0|1|
-- |2|X|X|X| => se puede observar que quedan bytes desperdiciados, por lo que el 
+- |2|x|x|x| => se puede observar que quedan bytes desperdiciados, por lo que el 
 - |0|0|0|3| sizeof() de mi estructura devolvería 12, si sumamos los tamaños 
             sizeof(int) + sizeof(char) + sizeof(int) = 4+1+4 = 9 
             vemos que no coinciden.
@@ -204,7 +205,8 @@ asociados a las normas básicas de codificación.
 		y el paréntesis que encierra la condición, se elimina un espacio 
 		innecesario dentro del paréntesis que encierra la condición de un *if*,
 		se coloca un *else if* en la misma línea que la llave que lo precede y 
-		por último se elimina un espacio innecesario entre una variable y el *;*.
+		por último se elimina un espacio innecesario entre la variable
+        next_state y el *;*.
 - **diff paso1_wordscounter.h paso2_wordscounter.h:** se reduce la longitud
 		del comentario que superaba los 80 caracteres.
 		
@@ -241,4 +243,27 @@ Explicar cada uno e indicar si se trata de errores del compilador o del linker.*
         un error de compilación.
 
 ## Paso 3: SERCOM - Errores de generación 3
+
+1. **Describa en breves palabras las correcciones realizadas respecto de la 
+versión anterior.**
+- **paso3_wordscounter.c:** en este archivo se incluye la biblioteca 
+		<stdlib.h>, la cual no estaba incluida en las versiones anteriores.
+- **paso3_wordscounter.h:** aquí se incluyen 2 bibliotecas, <string.h> y
+		<stdio.h>, las cuales no estaban incluidas en las versiones anteriores 
+		de este archivo.
+- **paso3_main.c:** no presenta nuevos cambios con respecto a las versiones
+		anteriores.
 		
+2. **Captura de pantalla indicando los errores de generación del ejecutable. 
+Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+![Paso3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso3/paso3.png)
+Se observa como sólo tenemos un error correspondiente al archivo *paso3_main.c*,
+en la línea número 27, *undefined reference to 'wordscounter_destroy'*, este 
+error nos indica que tenemos una referencia no definida, esto tiene que ver con
+el hecho de que si bien la función *wordscounter_destroy*, está declarada en el 
+archivo *paso3_wordscounter.h*, el cual estamos incluyendo, la función no se 
+encuentra definida ni en *paso3_wordscounter.h* o *paso3_wordscounter.c*, por
+lo que se genera un error del linker, ya que al buscar el código de esta función
+para enlazarlo y generar el ejecutable el linker no logra encontrarlo.
+
+## Paso 4: SERCOM - ​ Memory Leaks y ​ Buffer Overflows
