@@ -509,7 +509,7 @@ atención el listado de archivos abiertos al finalizar el programa.**
 
 No se han reportado errores con valgrind que el Sercom no haya detectado.
 
-3. Controlar el código final entregado. Verificar el uso de buenas prácticas de
-programación y el cumplimiento del enunciado del trabajo.
+3. **Controlar el código final entregado. Verificar el uso de buenas prácticas de
+programación y el cumplimiento del enunciado del trabajo.**
 
 
