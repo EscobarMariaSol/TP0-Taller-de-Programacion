@@ -298,7 +298,7 @@ funcionalidad a la función.
 
 ![Paso4_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_2.png)
 
-- **paso4_main.c:** En la línea 14 indica que hay 344 bytes sin liberar, a
+- **paso4_main.c:** En la línea 14 indica que hay 472 bytes sin liberar, a
 		los cuales no se le pierde referencia durante la ejecución, esto sucede
 		porque en esa línea se llama a la función *fopen* pero luego nunca se 
 		cierra el archivo llamando a *fclose*.
@@ -310,20 +310,20 @@ funcionalidad a la función.
 		su referencia, como durante la ejecución de *wordscounter_process* se 
 		hacen varios llamados a esta función esto sucede en 215 veces.
 		
-3. **Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba **
-**‘Long Filename’. Describir los errores reportados por Valgrind.**
+3. **Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba
+‘Long Filename’. Describir los errores reportados por Valgrind.**
 
 ![Paso4_4](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_3.png)
 
 ![Paso4_5](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_4.png)
 
 Este error indica que se produce un buffer overflow, esto sucede en el archivo 
-*paso4_main.c*, línea 13, donde se realiza un llamado a la función *memcpy* a la
-cual se le pasa un buffer de tamaño 30 bytes, luego se le pasa un texto el cual,
-será copiado, y el tamaño del texto, lo que sucede aquí es que esta función no 
-controla el tamaño de bytes que tiene el texto, por lo que al pasar un texto de
-tamaño mayor a 30 bytes el buffer se desborda y se empieza a copiar en la 
-memoria vecina al buffer.
+*paso4_main.c*, línea 13, donde se realiza un llamado a la función *memcpy* a 
+la cual se le pasa un buffer, luego se le pasa un texto el cual, será copiado 
+dentro del buffer, y el tamaño del texto, lo que sucede aquí es que esta 
+función no controla el tamaño de bytes que tiene el texto, por lo que al pasar
+un texto de tamaño mayor al tamaño del buffer, el buffer se desborda y se 
+empieza a copiar en la memoria vecina al buffer.
 
 4. **¿Podría solucionarse este error utilizando la función strncpy​?
 ¿Qué hubiera ocurrido con la ejecución de la prueba?**
