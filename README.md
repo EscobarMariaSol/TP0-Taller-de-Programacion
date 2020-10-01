@@ -370,13 +370,13 @@ versión anterior.**
 
 ![Paso5_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso5.png)
 
-- **Invalid File:** esta prueba falla porque el sistema espera que se retorne un
+- **Invalid File(archivo_invalido):** esta prueba falla porque el sistema espera que se retorne un
 	1 cuando ocurra un error durante la ejecución del programa, en este caso el
 	error es que el archivo no es válido y el valor de retorno especificado en 
-	*paso5_main.c* es un -1. Por este motivo el Sercom indica que se esperaba 
-	terminar con un código de retorno 1 pero se obtuvo 255, que corresponde al
-	valor -1.
-- **Single Word:** esta prueba falla porque la salida estándar no coincide con 
+	*paso5_main.c* es ERROR que vale -1. Por este motivo el Sercom indica que 
+    se esperaba terminar con un código de retorno 1 pero se obtuvo 255, que 
+    corresponde al valor -1.
+- **Single Word(una_palabra):** esta prueba falla porque la salida estándar no coincide con 
 	lo esperado, esto es lo que indica el Sercom. Esto se debe a que el archivo
 	finaliza luego del último caracter de la palabra *word*, entonces como antes
 	de que el programa chequee si se acabó la palabra se chequea el fin del 
@@ -440,6 +440,13 @@ static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
 - **¿Por qué motivo el debugger no se detuvo en el breakpoint de la línea 45:** 
 	**self->words++;?**
 
+
+Durante la ejecución del programa, el debugger no se detuvo en el breakpoint de 
+la línea 45: self->words++; porque nunca llega a ejecutar esas líneas, lo que 
+sucede es que al chequear en *end of file* en la línea 38, se da como finalizado
+el conteo y directamente se salta a la línea 49. Esto se puede observar en el 
+código citado a continuación.
+
 ```C
 34	static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
 35	    const char* delim_words = " ,.;:\n";
@@ -459,11 +466,33 @@ static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
 49		 return next_state;
 50	}
 ```
-Durante la ejecución del programa, el debugger no se detuvo en el breakpoint de 
-la línea 45: self->words++; porque nunca llega a ejecutar esas líneas, lo que 
-sucede es que al chequear en *end of file* en la línea 38, se da como finalizado
-el conteo y directamente se salta a la línea 49.
 
 ## Paso 6: SERCOM - Entrega exitosa
 
 
+1. **Describa en breves palabras las correcciones realizadas respecto de la** 
+**versión anterior.**
+
+- **paso6_main.c:** en esta fución se cambia la definición de la constante ERROR
+	de un -1 a un 1, esto soluciona el error de la prueba *Invalid File*.
+- **paso6_wordscounter.c:** aquí se cambia la definición de delim_words que pasa
+	de ser una constante local de la función *wordscounter_next_state*, y se 
+	define como una constante simbolica. Además se realiza un cambio a la hora 
+	de chequear el estado del counter, es decir se chequea primero si este 
+	debe ser incrementado y luego se chequea si se llegó al final del archivo,
+	este cambio soluciona el problema de la prueba *Single Word*, ya que el
+	contador se actualizará a 1 antes de finalizar la ejecución del programa.
+	
+2. **Captura de pantalla mostrando todas las entregas realizadas​ , tanto exitosas**
+**como fallidas.**
+
+![Paso6_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso6/paso_6_0.png)
+
+![Paso6_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso6/paso_6_2.png)
+
+3. **Captura de pantalla mostrando la ejecución de la prueba ‘Single Word’**
+**de forma local​ con las distintas variantes indicadas.**
+
+![Paso6_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso6/paso_6_1.png)
+
+## Paso 7: SERCOM - Revisión de la entrega
