@@ -264,8 +264,8 @@ versión anterior.**
 - **paso3_main.c:** no presenta nuevos cambios con respecto a las versiones
 		anteriores.
 		
-2. **Captura de pantalla indicando los errores de generación del ejecutable. 
-Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
+2. **Captura de pantalla indicando los errores de generación del ejecutable.** 
+**Explicar cada uno e indicar si se trata de errores del compilador o del linker.**
 
 ![Paso3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso3/paso3.png)
 
@@ -310,8 +310,8 @@ funcionalidad a la función.
 		su referencia, como durante la ejecución de *wordscounter_process* se 
 		hacen varios llamados a esta función esto sucede en 215 veces.
 		
-3. **Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba 
-‘Long Filename’. Describir los errores reportados por Valgrind.**
+3. **Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba **
+**‘Long Filename’. Describir los errores reportados por Valgrind.**
 
 ![Paso4_4](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_3.png)
 
@@ -338,15 +338,132 @@ la unica diferencia que tiene con *memcpy*, ya que esta copia la cantidad de
 
 5. **Explicar de qué se trata un ​ segmentation fault​ y un ​ buffer overflow​.**
 
-*Segmentation Fault* es un error que se da cuanto se intenta acceder a lugares
+**Segmentation Fault** es un error que se da cuanto se intenta acceder a lugares
 de memoria a los cuales no tenemos permitido. Por ejemplo, cuando se intenta
 escribir o modificar valores dentro del code segment.
 
-*Buffer overflow* es un error que se da cuando reservamos cierta cantidad de 
+**Buffer overflow** es un error que se da cuando reservamos cierta cantidad de 
 memoria en un buffer y luego a la hora de utilizarlo superamos el tamaño de la
 memoria reservada y comenzamos a escribir en memoria que no teníamos asignada 
 para ese proposito.
 
 ## Paso 5: SERCOM - Código de retorno y salida estándar
+
+1. **Describa en breves palabras las correcciones realizadas respecto de la 
+versión anterior.**
+	
+- **paso5_main.c:** se elimina el buffer y la función memcpy que generaba un
+	error en el paso anterior, ya que se copiaba la ruta del archivo en el 
+	buffer y este se desbordaba, ahora directamente se pasa la ruta del archivo
+	a la función *fopen*, sin necesidad de pasos intermedios, además se coloca 
+	una condición para verificar el fin  del archivo y así llamar a *fclose* 
+	para cerrarlo.
+- **paso5_wordscounter.c:** se elimina el llamado a la función *malloc* que se 
+	usaba para pedir memoria en la cual almacenar los caracteres delimitadores,
+	esto soluciona el problema de pérdida de memoria causada por no liberar la
+	memoria reservada con la función *malloc*, en cambio se utiliza una
+	constante que representa un arreglo de los caracteres delimitadores.
+
+2. **Describa el motivo por el que fallan las prueba ‘Invalid File’ y ‘Single** 
+**Word’. ¿Qué información entrega SERCOM para identificar el error? Realice una**
+**captura de pantalla.**
+
+![Paso5_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso5.png)
+
+- **Invalid File:** esta prueba falla porque el sistema espera que se retorne un
+	1 cuando ocurra un error durante la ejecución del programa, en este caso el
+	error es que el archivo no es válido y el valor de retorno especificado en 
+	*paso5_main.c* es un -1. Por este motivo el Sercom indica que se esperaba 
+	terminar con un código de retorno 1 pero se obtuvo 255, que corresponde al
+	valor -1.
+- **Single Word:** esta prueba falla porque la salida estándar no coincide con 
+	lo esperado, esto es lo que indica el Sercom. Esto se debe a que el archivo
+	finaliza luego del último caracter de la palabra *word*, entonces como antes
+	de que el programa chequee si se acabó la palabra se chequea el fin del 
+	archivo, la funció finaliza sin actualizar el contador, es por eso que se
+	devuelve un 0, en lugar de un 1, haciendo que los resultados no coincidan.
+
+3. **Captura de pantalla de la ejecución del comando hexdump​.**
+**¿Cuál es el último carácter del archivo input_single_word.txt?**
+
+![Paso5_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_0.png)
+
+El último caracter del archivo es el valor hexadecimal *64*, que corresponde a 
+la letra *d*.
+
+4. Captura de pantalla con el resultado de la ejecución con gdb​. 
+Explique brevemente los comandos utilizados en gdb​. ¿Por qué motivo el debugger
+no se detuvo en el breakpoint de la línea 45: self->words++;?
+
+![Paso5_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_1.png)
+
+![Paso5_4](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_2.png)
+
+![Paso5_5](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_3.png)
+
+![Paso5_6](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_4.png)
+
+- **info functions:** lista las funciones propias que se utilizan dentro del 
+	programa indicando los tipos de los parámetros que reciben.
+- **list wordscounter_next_state:** nos muestra las lineas que rodean a la
+	función que le indicamos, por default se muestran 10 lineas, en este caso se
+	muestran las 5 lineas por encima y por debajo de la definición de la misma:
+```C
+	    int c = getc(text_file);
+        state = wordscounter_next_state(self, state, c);
+    } while (state != STATE_FINISHED);
+}
+
+static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
+    const char* delim_words = " ,.;:\n";
+
+    char next_state = state;
+    if (c == EOF) {
+```
+- **list:** nos muestra las 10 líneas que están a continuación de las últimas 
+	líneas impresas:
+```C
+        next_state = STATE_FINISHED;
+    } else if (state == STATE_WAITING_WORD) {
+        if (strchr(delim_words, c) == NULL)
+            next_state = STATE_IN_WORD;
+    } else if (state == STATE_IN_WORD) {
+        if (strchr(delim_words, c) != NULL) {
+            self->words++;
+            next_state = STATE_WAITING_WORD;
+        }
+    }
+```
+- **break 45:** este comando indica que cuando el programa esté en ejecución el
+	mismo se detenga en esa línea, la 45.
+- **run:** este comando se utiliza para iniciar la ejecución del programa.
+- **¿Por qué motivo el debugger no se detuvo en el breakpoint de la línea 45:** 
+	**self->words++;?**
+
+```C
+34	static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
+35	    const char* delim_words = " ,.;:\n";
+36
+37	    char next_state = state;
+38	    if (c == EOF) {
+39	        next_state = STATE_FINISHED;
+40	    } else if (state == STATE_WAITING_WORD) {
+41	        if (strchr(delim_words, c) == NULL)
+42	            next_state = STATE_IN_WORD;
+43	    } else if (state == STATE_IN_WORD) {
+44	        if (strchr(delim_words, c) != NULL) {
+45	            self->words++;
+46	            next_state = STATE_WAITING_WORD;
+47	        }
+48	    }
+49		 return next_state;
+50	}
+```
+Durante la ejecución del programa, el debugger no se detuvo en el breakpoint de 
+la línea 45: self->words++; porque nunca llega a ejecutar esas líneas, lo que 
+sucede es que al chequear en *end of file* en la línea 38, se da como finalizado
+el conteo y directamente se salta a la línea 49.
+
+## Paso 6: SERCOM - Entrega exitosa
 
 
