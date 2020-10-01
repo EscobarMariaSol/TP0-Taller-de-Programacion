@@ -289,8 +289,8 @@ La única correción detectada es la que se realizó en el archivo
 hace que el linker no arroje ningun error, aunque no se le proporciona ninguna
 funcionalidad a la función.
 
-2. Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba 
-‘TDA’. Describir los errores reportados por Valgrind.
+2. **Captura de pantalla del resultado de ejecución con Valgrind​ de la prueba 
+‘TDA’. Describir los errores reportados por Valgrind.**
 
 ![Paso4_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso4/paso_4_0.png)
 
