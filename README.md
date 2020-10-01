@@ -364,9 +364,9 @@ versión anterior.**
 	memoria reservada con la función *malloc*, en cambio se utiliza una
 	constante que representa un arreglo de los caracteres delimitadores.
 
-2. **Describa el motivo por el que fallan las prueba ‘Invalid File’ y ‘Single** 
-**Word’. ¿Qué información entrega SERCOM para identificar el error? Realice una**
-**captura de pantalla.**
+2. **Describa el motivo por el que fallan las prueba ‘Invalid File’ y ‘Single
+Word’. ¿Qué información entrega SERCOM para identificar el error? Realice una
+captura de pantalla.**
 
 ![Paso5_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso5.png)
 
@@ -383,17 +383,17 @@ versión anterior.**
 	archivo, la funció finaliza sin actualizar el contador, es por eso que se
 	devuelve un 0, en lugar de un 1, haciendo que los resultados no coincidan.
 
-3. **Captura de pantalla de la ejecución del comando hexdump​.**
-**¿Cuál es el último carácter del archivo input_single_word.txt?**
+3. **Captura de pantalla de la ejecución del comando hexdump​. 
+¿Cuál es el último carácter del archivo input_single_word.txt?**
 
 ![Paso5_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_0.png)
 
 El último caracter del archivo es el valor hexadecimal *64*, que corresponde a 
 la letra *d*.
 
-4. Captura de pantalla con el resultado de la ejecución con gdb​. 
+4. **Captura de pantalla con el resultado de la ejecución con gdb​.
 Explique brevemente los comandos utilizados en gdb​. ¿Por qué motivo el debugger
-no se detuvo en el breakpoint de la línea 45: self->words++;?
+no se detuvo en el breakpoint de la línea 45: self->words++;?**
 
 ![Paso5_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso5/paso_5_1.png)
 
@@ -437,8 +437,8 @@ static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
 - **break 45:** este comando indica que cuando el programa esté en ejecución el
 	mismo se detenga en esa línea, la 45.
 - **run:** este comando se utiliza para iniciar la ejecución del programa.
-- **¿Por qué motivo el debugger no se detuvo en el breakpoint de la línea 45:** 
-	**self->words++;?**
+- **¿Por qué motivo el debugger no se detuvo en el breakpoint de la línea 45: 
+self->words++;?**
 
 
 Durante la ejecución del programa, el debugger no se detuvo en el breakpoint de 
@@ -470,8 +470,8 @@ código citado a continuación.
 ## Paso 6: SERCOM - Entrega exitosa
 
 
-1. **Describa en breves palabras las correcciones realizadas respecto de la** 
-**versión anterior.**
+1. **Describa en breves palabras las correcciones realizadas respecto de la
+versión anterior.**
 
 - **paso6_main.c:** en esta fución se cambia la definición de la constante ERROR
 	de un -1 a un 1, esto soluciona el error de la prueba *Invalid File*.
@@ -483,16 +483,33 @@ código citado a continuación.
 	este cambio soluciona el problema de la prueba *Single Word*, ya que el
 	contador se actualizará a 1 antes de finalizar la ejecución del programa.
 	
-2. **Captura de pantalla mostrando todas las entregas realizadas​ , tanto exitosas**
-**como fallidas.**
+2. **Captura de pantalla mostrando todas las entregas realizadas​ , tanto exitosas
+como fallidas.**
 
 ![Paso6_1](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso6/paso_6_0.png)
 
 ![Paso6_2](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso6/paso_6_2.png)
 
-3. **Captura de pantalla mostrando la ejecución de la prueba ‘Single Word’**
-**de forma local​ con las distintas variantes indicadas.**
+3. **Captura de pantalla mostrando la ejecución de la prueba ‘Single Word’
+de forma local​ con las distintas variantes indicadas.**
 
 ![Paso6_3](https://github.com/EscobarMariaSol/TP0-Taller-de-Programacion/blob/master/img/paso6/paso_6_1.png)
 
 ## Paso 7: SERCOM - Revisión de la entrega
+
+1. **Revisar el estado de todas las pruebas ejecutadas en SERCOM con el código del
+paso 6.**
+
+Se corroboró que todas las pruebas ejecutadas por el Sercom cumplen con la
+salida esperada.
+
+2. **Abrir cada una de las salidas de Valgrind​ y controlar que no hay errores 
+reportados que no fueran detectados como un fallo en la ejecución. Revisar con
+atención el listado de archivos abiertos al finalizar el programa.**
+
+No se han reportado errores con valgrind que el Sercom no haya detectado.
+
+3. Controlar el código final entregado. Verificar el uso de buenas prácticas de
+programación y el cumplimiento del enunciado del trabajo.
+
+
